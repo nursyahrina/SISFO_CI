@@ -1,12 +1,15 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Mahasiswa extends CI_Controller {
+class Mahasiswa extends CI_Controller
+{
 
-	function __construct(){
+	function __construct()
+	{
 		parent::__construct();
-		$this->load->model('data_mahasiswa');
 		$this->load->helper(array('url'));
+		$this->load->library('form_validation');
+		$this->load->model('data_mahasiswa');
 	}
 
 	public function index()
@@ -24,7 +27,7 @@ class Mahasiswa extends CI_Controller {
 	{
 		$info['datatype'] = 'mahasiswa';
 		$info['operation'] = 'Input';
-		
+
 		$nim = $this->input->post('nim');
 		$namamahasiswa = $this->input->post('namamahasiswa');
 		$jeniskelamin = $this->input->post('jeniskelamin');
@@ -40,19 +43,19 @@ class Mahasiswa extends CI_Controller {
 				'jeniskelamin' => $jeniskelamin,
 				'alamat' => $alamat
 			);
-			$action = $this->data_mahasiswa->insert_data($data,'mahasiswa');
-			$this->load->view('notifications/insert_success', $info);	
+			$action = $this->data_mahasiswa->insert_data($data, 'mahasiswa');
+			$this->load->view('notifications/insert_success', $info);
 		} else {
 			$this->load->view('notifications/insert_failed', $info);
 		}
-		$this->load->view('source');	
+		$this->load->view('source');
 	}
 
 	public function edit()
 	{
 		$info['datatype'] = 'mahasiswa';
 		$info['operation'] = 'Ubah';
-		
+
 		$nim = $this->input->post('nim');
 		$namamahasiswa = $this->input->post('namamahasiswa');
 		$jeniskelamin = $this->input->post('jeniskelamin');
@@ -66,7 +69,7 @@ class Mahasiswa extends CI_Controller {
 			'jeniskelamin' => $jeniskelamin,
 			'alamat' => $alamat
 		);
-		$action = $this->data_mahasiswa->update_data($nim, $data,'mahasiswa');
+		$action = $this->data_mahasiswa->update_data($nim, $data, 'mahasiswa');
 
 		if ($action) {
 			$this->load->view('notifications/insert_success', $info);
@@ -74,7 +77,7 @@ class Mahasiswa extends CI_Controller {
 			$this->load->view('notifications/insert_failed', $info);
 		}
 
-		$this->load->view('source');	
+		$this->load->view('source');
 	}
 
 	public function delete()
@@ -95,7 +98,23 @@ class Mahasiswa extends CI_Controller {
 		$this->load->view('source');
 	}
 
-	function print(){	
+	public function laporan()
+	{
+		$user['username'] = $this->session->userdata('username');
+		$data['data_angkatan'] = $this->data_mahasiswa->get_angkatan()->result();
+
+		$this->load->view('header');
+		$this->load->view('navigation', $user);
+		$this->load->view('laporan/laporan_filter_mahasiswa', $data);
+		$this->load->view('footer');
+		$this->load->view('source');
+	}
+
+	public function laporan_filter()
+	{
+		$user['username'] = $this->session->userdata('username');
+		$data['data_angkatan'] = $this->data_mahasiswa->get_angkatan()->result();
+
 		$angkatan = $this->input->post('angkatan');
 
 		$data['angkatan'] = $angkatan;
@@ -105,14 +124,34 @@ class Mahasiswa extends CI_Controller {
 		} else {
 			$data['data_mahasiswa'] = $this->db->query("select * from mahasiswa where nim like '$angkatan%'")->result();
 		}
-		
+
+		$this->load->view('header');
+		$this->load->view('navigation', $user);
+		$this->load->view('laporan/laporan_mahasiswa', $data);
+		$this->load->view('footer');
+		$this->load->view('source');
+	}
+
+	function print()
+	{
+		$angkatan = $this->uri->segment('3');
+
+		$data['angkatan'] = $angkatan;
+
+		if ($angkatan === 'all') {
+			$data['data_mahasiswa'] = $this->db->query("select * from mahasiswa")->result();
+		} else {
+			$data['data_mahasiswa'] = $this->db->query("select * from mahasiswa where nim like '$angkatan%'")->result();
+		}
+
 		$this->load->view('print/mahasiswa', $data);
 	}
 
-	function cetak_pdf(){
+	function cetak_pdf()
+	{
 		$this->load->library('dompdf_gen');
-		
-		$angkatan = $this->input->post('angkatan');
+
+		$angkatan = $this->uri->segment('3');
 
 		$data['angkatan'] = $angkatan;
 
@@ -121,9 +160,9 @@ class Mahasiswa extends CI_Controller {
 		} else {
 			$data['data_mahasiswa'] = $this->db->query("select * from mahasiswa where nim like '$angkatan%'")->result();
 		}
-		
+
 		$this->load->view('pdf/mahasiswa', $data);
-		
+
 		$paper_size = 'A4';
 		$orientation = 'landscape';
 		$html = $this->output->get_output();
@@ -131,6 +170,6 @@ class Mahasiswa extends CI_Controller {
 
 		$this->dompdf->load_html($html);
 		$this->dompdf->render();
-		$this->dompdf->stream("mahasiswa.pdf", array('Attachment'=>0));
+		$this->dompdf->stream("mahasiswa.pdf", array('Attachment' => 0));
 	}
 }
