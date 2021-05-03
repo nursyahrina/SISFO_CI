@@ -7,9 +7,9 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo base_url().'dashboard' ?>">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo base_url() . 'dashboard' ?>">
                 <div class="sidebar-brand-icon">
-                    <img class="logo" src="<?php echo base_url().'assets/img/undraw_profile.svg' ?>">
+                    <img class="logo" src="<?php echo base_url() . 'assets/img/undraw_profile.svg' ?>">
                 </div>
                 <div class="sidebar-brand-text mx-3">Admin</div>
             </a>
@@ -19,7 +19,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="<?php echo base_url().'dashboard' ?>">
+                <a class="nav-link" href="<?php echo base_url() . 'dashboard' ?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -27,49 +27,39 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Master Data
-            </div>
-
-            <!-- Nav Item - Data Mahasiswa -->
+            <!-- Nav Item - Master Data Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url().'mahasiswa' ?>">
-                    <i class="fas fa-users icon-nav"></i>
-                    <span>Mahasiswa</span>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Master Data</span>
                 </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="<?php echo base_url() ?>mahasiswa">Mahasiswa</a>
+                        <a class="collapse-item" href="<?php echo base_url() ?>dosen">Dosen</a>
+                        <a class="collapse-item" href="<?php echo base_url() ?>matakuliah">Matakuliah</a>
+                        <a class="collapse-item" href="<?php echo base_url() ?>krs">KRS</a>
+                    </div>
+                </div>
             </li>
 
-            <!-- Nav Item - Data Dosen -->
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url().'dosen' ?>">
-                    <i class="fas fa-chalkboard-teacher icon-nav"></i>
-                    <span>Dosen</span>
-                </a>
-            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider">
 
-            <!-- Nav Item - Data Mata Kuliah -->
+            <!-- Nav Item - Report Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url().'matakuliah' ?>">
-                    <i class="fas fa-book icon-nav"></i>
-                    <span>Mata Kuliah</span>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Laporan</span>
                 </a>
-            </li>
-
-            <!-- Nav Item - Data KRS -->
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url().'krs' ?>">
-                    <i class="fas fa-clipboard-list icon-nav"></i>
-                    <span>KRS</span>
-                </a>
-            </li>
-
-            <!-- Nav Item - Data TA -->
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url().'ta' ?>">
-                    <i class="fas fa-calendar icon-nav"></i>
-                    <span>Tahun Akademik</span>
-                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="<?php echo base_url() ?>mahasiswa/laporan">Karyawan</a>
+                        <a class="collapse-item" href="<?php echo base_url() ?>dosen/laporan">Dosen</a>
+                        <a class="collapse-item" href="<?php echo base_url() ?>matakuliah/laporan">Matakuliah</a>
+                        <a class="collapse-item" href="<?php echo base_url() ?>krs/laporan">KRS</a>
+                    </div>
+                </div>
             </li>
 
             <!-- Divider -->
@@ -118,9 +108,8 @@
 
                         <!-- Web Page Logo -->
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo base_url().'dashboard' ?>">
-                                <img class="logo"
-                                    src="<?php echo base_url().'assets/img/logo_itp.png' ?>">
+                            <a class="nav-link" href="<?php echo base_url() . 'dashboard' ?>">
+                                <img class="logo" src="<?php echo base_url() . 'assets/img/logo_itp.png' ?>">
                             </a>
                         </li>
 
@@ -139,8 +128,7 @@
                 <!-- End of Topbar -->
 
                 <!-- Logout Modal-->
-                <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModal"
-                    aria-hidden="true">
+                <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModal" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -152,7 +140,7 @@
                             <div class="modal-body mx-3 mb-4">Pilih tombol "Logout" di bawah jika anda siap untuk mengakhiri sesi ini.</div>
                             <div class="modal-footer d-flex m-3">
                                 <button class="flex-fill btn btn-secondary p-2 rounded-pill" type="button" data-dismiss="modal">Batal</button>
-                                <a class="flex-fill btn btn-primary p-2 rounded-pill" href="<?php echo base_url().'welcome/logout'?>">Logout</a>
+                                <a class="flex-fill btn btn-primary p-2 rounded-pill" href="<?php echo base_url() . 'welcome/logout' ?>">Logout</a>
                             </div>
                         </div>
                     </div>
