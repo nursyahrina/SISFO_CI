@@ -7,7 +7,7 @@
                             <h4 class="my-auto font-weight-bold text-primary">Laporan Data Mahasiswa</h4>
                         </div>
                         <div class="card-body">
-                            <form name="form_filter_pelanggan" action="<?php echo base_url() . 'mahasiswa/laporan_filter' ?>" method="post" class="w-50 user needs-validation mx-3 mb-4" novalidate>
+                            <form name="form_filter_mahasiswa" action="<?php echo base_url() . 'mahasiswa/laporan_filter' ?>" method="post" class="w-50 user needs-validation mx-3 mb-4" novalidate>
                                 <div class="form-group">
                                     <label class="control-label text-primary">Angkatan</label>
                                     <select class="form-control" name="angkatan" required autofocus>
@@ -42,18 +42,19 @@
                                             <th>Alamat</th>
                                         </tr>
                                     </thead>
-                                    <?php
-                                    $no = 1;
-                                    foreach ($data_mahasiswa as $mahasiswa) {
-                                    ?>
-                                        <tr>
-                                            <th><?php echo $no++ ?></th>
-                                            <td><?php echo $mahasiswa->nim ?></td>
-                                            <td><?php echo $mahasiswa->namamahasiswa ?></td>
-                                            <td><?php echo $mahasiswa->jeniskelamin ?></td>
-                                            <td><?php echo $mahasiswa->alamat ?></td>
-                                        </tr>
-                                    <?php } ?>
+                                    <tbody>
+                                        <?php
+                                        $no = 1;
+                                        foreach ($data_mahasiswa as $mahasiswa) {
+                                        ?>
+                                            <tr>
+                                                <th><?php echo $no++ ?></th>
+                                                <td><?php echo $mahasiswa->nim ?></td>
+                                                <td><?php echo $mahasiswa->namamahasiswa ?></td>
+                                                <td><?php echo $mahasiswa->jeniskelamin ?></td>
+                                                <td><?php echo $mahasiswa->alamat ?></td>
+                                            </tr>
+                                        <?php } ?>
                                     </tbody>
                                 </table>
                             </div>
