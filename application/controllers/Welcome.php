@@ -51,6 +51,15 @@ class Welcome extends CI_Controller
 
 	function logout()
 	{
+		if ($this->session->userdata('chat') == 'online') {
+			$username = $this->session->userdata('username');
+			$nama_user = $this->session->userdata('nama_user');
+
+			$logfile = "assets/log/log.html";
+			$logout_message = "<div class='msgln'><span class='left-info'>User <b class='user-name-left'>" . $nama_user . "</b> has left the chat session.</span><br></div>";
+			file_put_contents($logfile, $logout_message, FILE_APPEND | LOCK_EX);
+		}
+
 		$this->session->sess_destroy();
 		$this->load->view('header');
 		$this->load->view('notifications/logout_success');

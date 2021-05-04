@@ -14,10 +14,11 @@ class Mahasiswa extends CI_Controller
 
 	public function index()
 	{
+		$user['nama_user'] = $this->session->userdata('nama_user');
 		$data['data_mahasiswa'] = $this->data_mahasiswa->get_data()->result();
 		$data['data_angkatan'] = $this->data_mahasiswa->get_angkatan()->result();
 		$this->load->view('header');
-		$this->load->view('navigation');
+		$this->load->view('navigation', $user);
 		$this->load->view('mahasiswa', $data);
 		$this->load->view('footer');
 		$this->load->view('source');
@@ -100,7 +101,7 @@ class Mahasiswa extends CI_Controller
 
 	public function laporan()
 	{
-		$user['username'] = $this->session->userdata('username');
+		$user['nama_user'] = $this->session->userdata('nama_user');
 		$data['data_angkatan'] = $this->data_mahasiswa->get_angkatan()->result();
 
 		$this->load->view('header');
@@ -112,7 +113,7 @@ class Mahasiswa extends CI_Controller
 
 	public function laporan_filter()
 	{
-		$user['username'] = $this->session->userdata('username');
+		$user['nama_user'] = $this->session->userdata('nama_user');
 		$data['data_angkatan'] = $this->data_mahasiswa->get_angkatan()->result();
 
 		$angkatan = $this->input->post('angkatan');

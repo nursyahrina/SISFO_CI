@@ -14,9 +14,10 @@ class Dosen extends CI_Controller
 
 	public function index()
 	{
+		$user['nama_user'] = $this->session->userdata('nama_user');
 		$data['data_dosen'] = $this->data_dosen->get_data()->result();
 		$this->load->view('header');
-		$this->load->view('navigation');
+		$this->load->view('navigation', $user);
 		$this->load->view('dosen', $data);
 		$this->load->view('footer');
 		$this->load->view('source');
@@ -93,6 +94,8 @@ class Dosen extends CI_Controller
 	public function laporan()
 	{
 		$user['username'] = $this->session->userdata('username');
+		$user['nama_user'] = $this->session->userdata('nama_user');
+
 		$data['data_tahun_lahir'] = $this->data_dosen->get_tahun_lahir()->result();
 
 		$this->load->view('header');
@@ -105,6 +108,7 @@ class Dosen extends CI_Controller
 	public function laporan_filter()
 	{
 		$user['username'] = $this->session->userdata('username');
+		$user['nama_user'] = $this->session->userdata('nama_user');
 
 		$dari = $this->input->post('dari');
 		$sampai = $this->input->post('sampai');

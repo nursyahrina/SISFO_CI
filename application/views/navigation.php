@@ -11,7 +11,7 @@
                 <div class="sidebar-brand-icon">
                     <img class="logo" src="<?php echo base_url() . 'assets/img/undraw_profile.svg' ?>">
                 </div>
-                <div class="sidebar-brand-text mx-3">Admin</div>
+                <div class="sidebar-brand-text mx-3"><?php echo $nama_user ?></div>
             </a>
 
             <!-- Divider -->
@@ -61,6 +61,17 @@
                         <a class="collapse-item" href="<?php echo base_url() ?>krs/laporan">KRS</a>
                     </div>
                 </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Nav Item - Data Mahasiswa -->
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo base_url() ?>chat" target="new">
+                    <i class="fas fa-comments icon-nav"></i>
+                    <span>Chat</span>
+                </a>
             </li>
 
             <!-- Divider -->

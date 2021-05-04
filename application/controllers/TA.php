@@ -1,9 +1,11 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class TA extends CI_Controller {
+class TA extends CI_Controller
+{
 
-	function __construct(){
+	function __construct()
+	{
 		parent::__construct();
 		$this->load->model('data_tahun_akademik');
 		$this->load->helper(array('url'));
@@ -11,9 +13,10 @@ class TA extends CI_Controller {
 
 	public function index()
 	{
+		$user['nama_user'] = $this->session->userdata('nama_user');
 		$data['data_tahun_akademik'] = $this->data_tahun_akademik->get_data()->result();
 		$this->load->view('header');
-		$this->load->view('navigation');
+		$this->load->view('navigation', $user);
 		$this->load->view('tahun_akademik', $data);
 		$this->load->view('footer');
 		$this->load->view('source');
@@ -23,7 +26,7 @@ class TA extends CI_Controller {
 	{
 		$info['datatype'] = 'ta';
 		$info['operation'] = 'Input';
-		
+
 		$ta = $this->input->post('ta');
 		$detail_ta = $this->input->post('detail_ta');
 
@@ -35,19 +38,19 @@ class TA extends CI_Controller {
 				'ta' => $ta,
 				'detail_ta' => $detail_ta
 			);
-			$action = $this->data_tahun_akademik->insert_data($data,'ta');
-			$this->load->view('notifications/insert_success', $info);	
+			$action = $this->data_tahun_akademik->insert_data($data, 'ta');
+			$this->load->view('notifications/insert_success', $info);
 		} else {
 			$this->load->view('notifications/insert_failed', $info);
 		}
-		$this->load->view('source');	
+		$this->load->view('source');
 	}
 
 	public function edit()
 	{
 		$info['datatype'] = 'ta';
 		$info['operation'] = 'Ubah';
-		
+
 		$ta = $this->input->post('ta');
 		$detail_ta = $this->input->post('detail_ta');
 
@@ -57,7 +60,7 @@ class TA extends CI_Controller {
 			'ta' => $ta,
 			'detail_ta' => $detail_ta
 		);
-		$action = $this->data_tahun_akademik->update_data($ta, $data,'ta');
+		$action = $this->data_tahun_akademik->update_data($ta, $data, 'ta');
 
 		if ($action) {
 			$this->load->view('notifications/insert_success', $info);
@@ -65,8 +68,8 @@ class TA extends CI_Controller {
 			$this->load->view('notifications/insert_failed', $info);
 		}
 
-			
-		$this->load->view('source');	
+
+		$this->load->view('source');
 	}
 
 	public function delete()
@@ -87,19 +90,21 @@ class TA extends CI_Controller {
 		$this->load->view('source');
 	}
 
-	function print(){
+	function print()
+	{
 		$data['data_tahun_akademik'] = $this->db->query("select * from ta")->result();
-		
+
 		$this->load->view('print/tahun_akademik', $data);
 	}
 
-	function cetak_pdf(){
+	function cetak_pdf()
+	{
 		$this->load->library('dompdf_gen');
-		
+
 		$data['data_tahun_akademik'] = $this->db->query("select * from ta")->result();
-		
+
 		$this->load->view('pdf/tahun_akademik', $data);
-		
+
 		$paper_size = 'A4';
 		$orientation = 'potrait';
 		$html = $this->output->get_output();
@@ -107,6 +112,6 @@ class TA extends CI_Controller {
 
 		$this->dompdf->load_html($html);
 		$this->dompdf->render();
-		$this->dompdf->stream("tahun_akademik.pdf", array('Attachment'=>0));
+		$this->dompdf->stream("tahun_akademik.pdf", array('Attachment' => 0));
 	}
 }

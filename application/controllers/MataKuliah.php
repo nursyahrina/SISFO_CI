@@ -14,9 +14,10 @@ class MataKuliah extends CI_Controller
 
 	public function index()
 	{
+		$user['nama_user'] = $this->session->userdata('nama_user');
 		$data['data_matakuliah'] = $this->data_matakuliah->get_data()->result();
 		$this->load->view('header');
-		$this->load->view('navigation');
+		$this->load->view('navigation', $user);
 		$this->load->view('matakuliah', $data);
 		$this->load->view('footer');
 		$this->load->view('source');
@@ -97,7 +98,7 @@ class MataKuliah extends CI_Controller
 	public function laporan()
 	{
 		$user['username'] = $this->session->userdata('username');
-
+		$user['nama_user'] = $this->session->userdata('nama_user');
 		$this->load->view('header');
 		$this->load->view('navigation', $user);
 		$this->load->view('laporan/laporan_filter_matakuliah');
@@ -108,6 +109,7 @@ class MataKuliah extends CI_Controller
 	public function laporan_filter()
 	{
 		$user['username'] = $this->session->userdata('username');
+		$user['nama_user'] = $this->session->userdata('nama_user');
 
 		$semester = $this->input->post('semester');
 

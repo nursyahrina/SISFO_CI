@@ -49,8 +49,8 @@
                             </form>
 
                             <div class="d-flex m-3">
-                                <a target="blank" href="<?php echo base_url() . 'krs/print/' . set_value('nim') . '/' . set_value('ta') ?>" class="btn btn-warning shadow-sm"><i class="fas fa-print fa-sm text-white-50"></i> Print</a>
-                                <a target="blank" href="<?php echo base_url() . 'krs/cetak_pdf/' . set_value('nim') . '/' . set_value('ta') ?>" class="btn btn-danger shadow-sm mx-2"><i class="fas fa-file fa-sm text-white-50"></i> Cetak PDF</a>
+                                <a target="new" href="<?php echo base_url() . 'krs/print/' . set_value('nim') . '/' . set_value('ta') ?>" class="btn btn-warning shadow-sm"><i class="fas fa-print fa-sm text-white-50"></i> Print</a>
+                                <a target="new" href="<?php echo base_url() . 'krs/cetak_pdf/' . set_value('nim') . '/' . set_value('ta') ?>" class="btn btn-danger shadow-sm mx-2"><i class="fas fa-file fa-sm text-white-50"></i> Cetak PDF</a>
                             </div>
 
                             <div class="table-responsive mt-3">

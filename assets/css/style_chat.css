@@ -1,81 +1,69 @@
-* {
-  box-sizing: border-box;
-}
-
-.logo {
-	width: 48px;
-}
-
-.logo-lg {
-	width: 64px;
-}
-
-.illustration {
-	display: block;
-	width: 75%;
-	text-align: center;
-	margin: auto;
-	margin-top: 20px;
-	margin-bottom: 20px;
-}
-
-.icon-nav {
-	min-width: 18px;
-	text-align: center;
-}
-
-.actions {
-	min-width: 60px;
-}
-
-.action-icons a i {
-	min-width: 28px;
-}
-
-.control-label {
-	font-size: 0.8rem;
-	margin-left: 12px;
-}
-
-.invalid-feedback {
-	margin-left: 12px;
-}
-
-.form-group input {
-	border-radius: 20px;
-}
-
-.alert-container {
-	width: 70%;
-	margin: auto;
-}
-
-@media (max-width: 768px) { 
-	.alert-container {
-		width: 100%;
-		margin: auto;
-	}
-
-	.illustration {
-		width: 90%;
-		text-align: center;
-	}
-}
-
-#wrapper {
+/* * {
+    margin: 0;
+    padding: 0;
+  }
+   
+  body {
+    margin: 20px auto;
+    font-family: "Lato";
+    font-weight: 300;
+  }
+   
+  form {
+    padding: 15px 25px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+   
+  form label {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+   
+  input {
+    font-family: "Lato";
+  }
+   
+  a {
+    color: #0000ff;
+    text-decoration: none;
+  }
+   
+  a:hover {
+    text-decoration: underline;
+  } */
+   
+  #wrapper,
+  #loginform {
     margin: 0 auto;
     padding-bottom: 25px;
+    background: #eee;
+    width: 600px;
+    max-width: 100%;
+    border: 2px solid #212121;
     border-radius: 4px;
+  }
+   
+  #loginform {
+    padding-top: 18px;
+    text-align: center;
+  }
+   
+  #loginform p {
+    padding: 15px 25px;
+    font-size: 1.4rem;
+    font-weight: bold;
   }
    
   #chatbox {
     text-align: left;
-    margin: 0 25px;
+    margin: 0 auto;
     margin-bottom: 25px;
     padding: 10px;
     background: #fff;
     height: 300px;
-    width: calc(100% - 50px);
+    width: 530px;
     border: 1px solid #a7a7a7;
     overflow: auto;
     border-radius: 4px;
@@ -83,8 +71,7 @@
   }
    
   #usermsg {
-	margin: 0 12px 0 25px;
-	width: calc(100% - 140px);
+    flex: 1;
     border-radius: 4px;
     border: 1px solid #ff9800;
   }
@@ -97,11 +84,12 @@
    
   #submitmsg,
   #enter{
+    background: #ff9800;
+    border: 2px solid #e65100;
     color: white;
     padding: 4px 10px;
     font-weight: bold;
     border-radius: 4px;
-	width: 70px;
   }
    
   .error {
@@ -109,11 +97,17 @@
   }
    
   #menu {
-    padding: 25px 25px 15px 25px;
+    padding: 15px 25px;
+    display: flex;
+  }
+   
+  #menu p.welcome {
+    flex: 1;
   }
    
   a#exit {
     color: white;
+    background: #c62828;
     padding: 4px 8px;
     border-radius: 4px;
     font-weight: bold;

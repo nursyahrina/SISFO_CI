@@ -1,9 +1,11 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Dashboard extends CI_Controller {
+class Dashboard extends CI_Controller
+{
 
-	function __construct(){
+	function __construct()
+	{
 		parent::__construct();
 		$this->load->model('data_mahasiswa');
 		$this->load->model('data_dosen');
@@ -16,15 +18,17 @@ class Dashboard extends CI_Controller {
 	public function index()
 	{
 		$data = array(
-					'n_mahasiswa' => $this->data_mahasiswa->count_rows(),
-					'n_dosen' => $this->data_dosen->count_rows(),
-					'n_matakuliah' => $this->data_matakuliah->count_rows(),
-					'n_krs' => $this->data_krs->count_rows(),
-					'n_ta' => $this->data_tahun_akademik->count_rows()
-				);
+			'n_mahasiswa' => $this->data_mahasiswa->count_rows(),
+			'n_dosen' => $this->data_dosen->count_rows(),
+			'n_matakuliah' => $this->data_matakuliah->count_rows(),
+			'n_krs' => $this->data_krs->count_rows(),
+			'n_ta' => $this->data_tahun_akademik->count_rows()
+		);
+
+		$user['nama_user'] = $this->session->userdata('nama_user');
 
 		$this->load->view('header');
-		$this->load->view('navigation');
+		$this->load->view('navigation', $user);
 		$this->load->view('dashboard', $data);
 		$this->load->view('footer');
 		$this->load->view('source');
