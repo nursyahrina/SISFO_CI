@@ -38,6 +38,7 @@
                         <a class="collapse-item" href="<?php echo base_url() ?>mahasiswa">Mahasiswa</a>
                         <a class="collapse-item" href="<?php echo base_url() ?>dosen">Dosen</a>
                         <a class="collapse-item" href="<?php echo base_url() ?>matakuliah">Matakuliah</a>
+                        <a class="collapse-item" href="<?php echo base_url() ?>ta">TA</a>
                         <a class="collapse-item" href="<?php echo base_url() ?>krs">KRS</a>
                     </div>
                 </div>
