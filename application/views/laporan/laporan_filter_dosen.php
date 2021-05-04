@@ -28,16 +28,6 @@
                                             <input type="number" class="form-control" name="sampai" required>
                                         </div>
                                     </div>
-                                    <!-- <select class="form-control" name="tahun_lahir" required autofocus>
-                                        <option value="all">Semua Dosen</option>
-                                        <?php
-                                        foreach ($data_tahun_lahir as $tahun_lahir) {
-                                        ?>
-                                            <option value="<?php echo $tahun_lahir->tahun_lahir ?>">
-                                                <?php echo $tahun_lahir->tahun_lahir ?>
-                                            </option>
-                                        <?php } ?>
-                                    </select> -->
                                 </div>
                                 <button type="submit" class="flex-fill btn btn-primary btn-user px-4">Cari</button>
                             </form>

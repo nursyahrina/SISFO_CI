@@ -105,13 +105,10 @@ class Dosen extends CI_Controller
 	public function laporan_filter()
 	{
 		$user['username'] = $this->session->userdata('username');
-		// $data['data_tahun_lahir'] = $this->data_dosen->get_tahun_lahir()->result();
 
-		// $tahun_lahir = $this->input->post('tahun_lahir');
 		$dari = $this->input->post('dari');
 		$sampai = $this->input->post('sampai');
 
-		// $data['tahun_lahir'] = $tahun_lahir;
 		$data['dari'] = $dari;
 		$data['sampai'] = $sampai;
 
