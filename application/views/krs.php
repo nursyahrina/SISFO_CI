@@ -264,7 +264,7 @@
                 ?>
 
                 <!-- Modal for print -->
-                <div class="modal fade" id="cetakKRS" data-keyboard="false" tabindex="-1" aria-labelledby="filterCetakKRS" aria-hidden="true">
+                <!-- <div class="modal fade" id="cetakKRS" data-keyboard="false" tabindex="-1" aria-labelledby="filterCetakKRS" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -316,10 +316,10 @@
                             </form>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Modal for export PDF -->
-                <div class="modal fade" id="cetakPDFKRS" data-keyboard="false" tabindex="-1" aria-labelledby="filterCetakKRS" aria-hidden="true">
+                <!-- <div class="modal fade" id="cetakPDFKRS" data-keyboard="false" tabindex="-1" aria-labelledby="filterCetakKRS" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -371,4 +371,4 @@
                             </form>
                         </div>
                     </div>
-                </div>
+                </div> -->

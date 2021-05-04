@@ -1,16 +1,19 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class KRS extends CI_Controller {
+class KRS extends CI_Controller
+{
 
-	function __construct(){
+	function __construct()
+	{
 		parent::__construct();
+		$this->load->helper(array('url'));
+		$this->load->library('form_validation');
 		$this->load->model('data_mahasiswa');
 		$this->load->model('data_dosen');
 		$this->load->model('data_matakuliah');
 		$this->load->model('data_tahun_akademik');
 		$this->load->model('data_krs');
-		$this->load->helper(array('url'));
 	}
 
 	public function index()
@@ -31,7 +34,7 @@ class KRS extends CI_Controller {
 	{
 		$info['datatype'] = 'krs';
 		$info['operation'] = 'Input';
-		
+
 		$ta = $this->input->post('ta');
 		$nim = $this->input->post('nim');
 		$mk = $this->input->post('mk');
@@ -53,19 +56,19 @@ class KRS extends CI_Controller {
 				'mk' => $mk,
 				'nidn' => $nidn
 			);
-			$action = $this->data_krs->insert_data($data,'krs');
-			$this->load->view('notifications/insert_success', $info);	
+			$action = $this->data_krs->insert_data($data, 'krs');
+			$this->load->view('notifications/insert_success', $info);
 		} else {
 			$this->load->view('notifications/insert_failed', $info);
 		}
-		$this->load->view('source');	
+		$this->load->view('source');
 	}
 
 	public function edit()
 	{
 		$info['datatype'] = 'krs';
 		$info['operation'] = 'Ubah';
-		
+
 		$ta = $this->input->post('ta');
 		$nim = $this->input->post('nim');
 		$mk = $this->input->post('mk');
@@ -84,7 +87,7 @@ class KRS extends CI_Controller {
 			'mk' => $mk,
 			'nidn' => $nidn
 		);
-		$action = $this->data_krs->update_data($where, $data,'krs');
+		$action = $this->data_krs->update_data($where, $data, 'krs');
 
 		if ($action) {
 			$this->load->view('notifications/insert_success', $info);
@@ -92,8 +95,8 @@ class KRS extends CI_Controller {
 			$this->load->view('notifications/insert_failed', $info);
 		}
 
-			
-		$this->load->view('source');	
+
+		$this->load->view('source');
 	}
 
 	public function delete()
@@ -122,26 +125,61 @@ class KRS extends CI_Controller {
 		$this->load->view('source');
 	}
 
-	function print(){
-		
+	public function laporan()
+	{
+		$user['username'] = $this->session->userdata('username');
+		$data['data_mahasiswa'] = $this->data_mahasiswa->get_data()->result();
+		$data['data_tahun_akademik'] = $this->data_tahun_akademik->get_data()->result();
+
+		$this->load->view('header');
+		$this->load->view('navigation', $user);
+		$this->load->view('laporan/laporan_filter_krs', $data);
+		$this->load->view('footer');
+		$this->load->view('source');
+	}
+
+	public function laporan_filter()
+	{
+		$user['username'] = $this->session->userdata('username');
+		$data['data_mahasiswa'] = $this->data_mahasiswa->get_data()->result();
+		$data['data_tahun_akademik'] = $this->data_tahun_akademik->get_data()->result();
+
 		$nim = $this->input->post('nim');
 		$ta = $this->input->post('ta');
 
+		$data['nim'] = $nim;
+		$data['ta'] = $ta;
+
 		$data['data_krs'] = $this->db->query("select * from krs, mahasiswa, matakuliah, dosen, ta where mahasiswa.nim = krs.nim and matakuliah.kode_mk = krs.mk and dosen.nidn = krs.nidn and ta.ta = krs.ta and krs.nim = '$nim' and krs.ta = '$ta'")->result();
-		
+
+		$this->load->view('header');
+		$this->load->view('navigation', $user);
+		$this->load->view('laporan/laporan_krs', $data);
+		$this->load->view('footer');
+		$this->load->view('source');
+	}
+
+	function print()
+	{
+		$nim = $this->uri->segment('3');
+		$ta = $this->uri->segment('4');
+
+		$data['data_krs'] = $this->db->query("select * from krs, mahasiswa, matakuliah, dosen, ta where mahasiswa.nim = krs.nim and matakuliah.kode_mk = krs.mk and dosen.nidn = krs.nidn and ta.ta = krs.ta and krs.nim = '$nim' and krs.ta = '$ta'")->result();
+
 		$this->load->view('print/krs', $data);
 	}
 
-	function cetak_pdf(){
+	function cetak_pdf()
+	{
 		$this->load->library('dompdf_gen');
-		
-		$nim = $this->input->post('nim');
-		$ta = $this->input->post('ta');
+
+		$nim = $this->uri->segment('3');
+		$ta = $this->uri->segment('4');
 
 		$data['data_krs'] = $this->db->query("select * from krs, mahasiswa, matakuliah, dosen, ta where mahasiswa.nim = krs.nim and matakuliah.kode_mk = krs.mk and dosen.nidn = krs.nidn and ta.ta = krs.ta and krs.nim = '$nim' and krs.ta = '$ta'")->result();
-		
+
 		$this->load->view('pdf/krs', $data);
-		
+
 		$paper_size = 'A4';
 		$orientation = 'landscape';
 		$html = $this->output->get_output();
@@ -149,6 +187,6 @@ class KRS extends CI_Controller {
 
 		$this->dompdf->load_html($html);
 		$this->dompdf->render();
-		$this->dompdf->stream("krs.pdf", array('Attachment'=>0));
+		$this->dompdf->stream("krs.pdf", array('Attachment' => 0));
 	}
 }
