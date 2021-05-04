@@ -1,12 +1,15 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class MataKuliah extends CI_Controller {
+class MataKuliah extends CI_Controller
+{
 
-	function __construct(){
+	function __construct()
+	{
 		parent::__construct();
-		$this->load->model('data_matakuliah');
 		$this->load->helper(array('url'));
+		$this->load->library('form_validation');
+		$this->load->model('data_matakuliah');
 	}
 
 	public function index()
@@ -23,7 +26,7 @@ class MataKuliah extends CI_Controller {
 	{
 		$info['datatype'] = 'matakuliah';
 		$info['operation'] = 'Input';
-		
+
 		$kode_mk = $this->input->post('kode_mk');
 		$nama_mk = $this->input->post('nama_mk');
 		$sks = $this->input->post('sks');
@@ -37,19 +40,19 @@ class MataKuliah extends CI_Controller {
 				'nama_mk' => $nama_mk,
 				'sks' => $sks
 			);
-			$action = $this->data_matakuliah->insert_data($data,'matakuliah');
-			$this->load->view('notifications/insert_success', $info);	
+			$action = $this->data_matakuliah->insert_data($data, 'matakuliah');
+			$this->load->view('notifications/insert_success', $info);
 		} else {
 			$this->load->view('notifications/insert_failed', $info);
 		}
-		$this->load->view('source');	
+		$this->load->view('source');
 	}
 
 	public function edit()
 	{
 		$info['datatype'] = 'matakuliah';
 		$info['operation'] = 'Ubah';
-		
+
 		$kode_mk = $this->input->post('kode_mk');
 		$nama_mk = $this->input->post('nama_mk');
 		$sks = $this->input->post('sks');
@@ -61,7 +64,7 @@ class MataKuliah extends CI_Controller {
 			'nama_mk' => $nama_mk,
 			'sks' => $sks
 		);
-		$action = $this->data_matakuliah->update_data($kode_mk, $data,'matakuliah');
+		$action = $this->data_matakuliah->update_data($kode_mk, $data, 'matakuliah');
 
 		if ($action) {
 			$this->load->view('notifications/insert_success', $info);
@@ -69,8 +72,8 @@ class MataKuliah extends CI_Controller {
 			$this->load->view('notifications/insert_failed', $info);
 		}
 
-			
-		$this->load->view('source');	
+
+		$this->load->view('source');
 	}
 
 	public function delete()
@@ -91,7 +94,21 @@ class MataKuliah extends CI_Controller {
 		$this->load->view('source');
 	}
 
-	function print(){		
+	public function laporan()
+	{
+		$user['username'] = $this->session->userdata('username');
+
+		$this->load->view('header');
+		$this->load->view('navigation', $user);
+		$this->load->view('laporan/laporan_filter_matakuliah');
+		$this->load->view('footer');
+		$this->load->view('source');
+	}
+
+	public function laporan_filter()
+	{
+		$user['username'] = $this->session->userdata('username');
+
 		$semester = $this->input->post('semester');
 
 		$data['semester'] = $semester;
@@ -101,14 +118,34 @@ class MataKuliah extends CI_Controller {
 		} else {
 			$data['data_matakuliah'] = $this->db->query("select * from matakuliah where substring(kode_mk, 4, 1) = '$semester'")->result();
 		}
-		
+
+		$this->load->view('header');
+		$this->load->view('navigation', $user);
+		$this->load->view('laporan/laporan_matakuliah', $data);
+		$this->load->view('footer');
+		$this->load->view('source');
+	}
+
+	function print()
+	{
+		$semester = $this->uri->segment('3');
+
+		$data['semester'] = $semester;
+
+		if ($semester === 'all') {
+			$data['data_matakuliah'] = $this->db->query("select * from matakuliah")->result();
+		} else {
+			$data['data_matakuliah'] = $this->db->query("select * from matakuliah where substring(kode_mk, 4, 1) = '$semester'")->result();
+		}
+
 		$this->load->view('print/matakuliah', $data);
 	}
 
-	function cetak_pdf(){
+	function cetak_pdf()
+	{
 		$this->load->library('dompdf_gen');
-		
-		$semester = $this->input->post('semester');
+
+		$semester = $this->uri->segment('3');
 
 		$data['semester'] = $semester;
 
@@ -117,9 +154,9 @@ class MataKuliah extends CI_Controller {
 		} else {
 			$data['data_matakuliah'] = $this->db->query("select * from matakuliah where substring(kode_mk, 4, 1) = '$semester'")->result();
 		}
-		
+
 		$this->load->view('pdf/matakuliah', $data);
-		
+
 		$paper_size = 'A4';
 		$orientation = 'potrait';
 		$html = $this->output->get_output();
@@ -127,6 +164,6 @@ class MataKuliah extends CI_Controller {
 
 		$this->dompdf->load_html($html);
 		$this->dompdf->render();
-		$this->dompdf->stream("matakuliah.pdf", array('Attachment'=>0));
+		$this->dompdf->stream("matakuliah.pdf", array('Attachment' => 0));
 	}
 }
