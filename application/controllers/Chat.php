@@ -73,7 +73,6 @@ class Chat extends CI_Controller
         $logfile = "assets/log/log.html";
         $text_message = "<div class='msgln'><span class='chat-time'>" . date("g:i A") . "</span> <b class='user-name'>" . $nama_user . "</b> " . stripslashes(htmlspecialchars($text)) . "<br></div>";
         file_put_contents($logfile, $text_message, FILE_APPEND | LOCK_EX);
-        redirect(base_url("chat/room"));
     }
 
     public function exit()
